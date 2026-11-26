@@ -25,6 +25,7 @@ export default function CardDetails(props) {
   const [input, setInput] = useState(false);
   const [text, setText] = useState(values.title);
   const [labelShow, setLabelShow] = useState(false);
+  const [dateShow, setDateShow] = useState(false);
   const Input = (props) => {
     return (
       <div className="">
@@ -257,12 +258,19 @@ export default function CardDetails(props) {
                     onClose={setLabelShow}
                   />
                 )}
-                <button>
+                <button onClick={() => setDateShow(true)}>
                   <span className="icon__sm">
                     <Clock />
                   </span>
                   Date
                 </button>
+                {dateShow && (
+                  <input
+                    type="date"
+                    value={values.date || ""}
+                    onChange={(e) => setValues({ ...values, date: e.target.value })}
+                  />
+                )}
 
                 <button onClick={() => props.removeCard(props.bid, values.id)}>
                   <span className="icon__sm">

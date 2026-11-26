@@ -10,6 +10,17 @@ const Card = (props) => {
   const [dropdown, setDropdown] = useState(false);
   const [modalShow, setModalShow] = useState(false);
 
+  // 마감일까지 남은 날짜 계산
+  const getDday = (date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const due = new Date(date + "T00:00");
+    const diff = Math.round((due - today) / (1000 * 60 * 60 * 24));
+    if (diff > 0) return "D-" + diff;
+    if (diff === 0) return "D-Day";
+    return "D+" + -diff;
+  };
+
   return (
     <Draggable
       key={props.id.toString()}
@@ -54,10 +65,12 @@ const Card = (props) => {
             </div>
 
             <div className="card__footer">
-              {/* <div className="time">
-                <Clock />
-                <span>Sun 12:30</span>
-              </div> */}
+              {props.card.date && (
+                <div className={getDday(props.card.date).startsWith("D+") ? "overdue" : ""}>
+                  <Calendar />
+                  <span>{getDday(props.card.date)}</span>
+                </div>
+              )}
               {props.card.task.length !== 0 && (
                 <div className="task">
                   <CheckSquare />

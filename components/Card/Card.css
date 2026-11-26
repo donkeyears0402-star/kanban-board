@@ -65,3 +65,8 @@
   margin-inline: 2px;
   font-weight: 500;
 }
+
+.card__footer .overdue span,
+.card__footer .overdue svg {
+  color: red;
+}
